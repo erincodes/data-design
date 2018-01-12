@@ -8,7 +8,7 @@
 	<body>
 		<h1><em>Data Design</em></h1>
 		<div class="persona"><h2>Persona</h2>
-			<p>Andrea is an employee of the CNM STEMulus Center. As part of her job, she is responsible for recruiting new students to the Deep Dive Bootcamp. One way that she markets the program is by blogging on Medium.com. Andrea primarily writes posts from her Microsoft Surface using Google Chrome as her browser. She is well-versed and comfortable with the technology tools that she uses.</p>
+			<p>Andrea is an employee of the CNM STEMulus Center. As part of her job, she is responsible for recruiting new students to the Deep Dive Bootcamp. One way that she markets the program is by blogging on Medium.com. Andrea primarily writes posts from her Microsoft Surface (that she utterly despises) using Google Chrome as her browser. She is well-versed and comfortable with the technology tools that she uses.</p>
 		</div>
 		<div>
 			<h2>User Story</h2>
@@ -48,9 +48,9 @@
 					<ul>
 						<li>Attributes of the profile entity:
 							<ul>
-								<li>profileId <strong>(this is a primary key)</strong></li><!--Primary keys are a type of unique keys. Index is the outermost circle, with unique keys inside, and primary keys inside of unique keys.-->
-								<li>profileName <strong>(this is a unique key)</strong></li>
-								<li>profileEmail</li>
+								<li>profileId <strong>(primary key)</strong></li><!--Primary keys are a type of unique keys. Index is the outermost circle, with unique keys inside, and primary keys inside of unique keys.-->
+								<li>profileName <strong>(unique information, but not a key)</strong></li>
+								<li>profileEmail <strong>(unique information)</strong></li>
 								<li>profileActivationToken</li>
 								<li>profileSalt</li> <!--In cryptography, a salt is random data that is used as an additional input to a one-way function that "hashes" data, a password or passphrase-->
 								<li>profileHash</li> <!--Hashing is saving passwords-->
@@ -62,22 +62,22 @@
 					<ul>
 						<li>Attributes of the article entity:
 							<ul>
-								<li>articleId</li>
-								<li>articleAuthorId</li>
-								<li>articleTitle</li>
+								<li>articleId <strong>(primary key)</strong></li>
+								<li>articleProfileId <strong>(foreign key)</strong></li> <!--Foreign keys are a combo of two primary keys (profileId and articleId in this case).-->
+								<li>articleTitle <strong>(unique information)</strong></li>
 								<li>arcticleDateTime</li>
-								<li>articleContent</li>
+								<li>articleContent <strong>(unique information)</strong></li>
 							</ul>
 						</li>
 					</ul>
 				</li>
 				<li>claps <em>(interaction on Andrea's published post by other Medium users)</em>
 					<ul>
-						<li>Attributes of the claps entity <strong>(claps is a weak/try hard entity)</strong>:
+						<li>Attributes of the claps entity <em> (claps is a weak/try hard entity):</em></li>
 							<ul>
-								<li>clapId</li> <!--this is the id that is generated for each indiv clap action.-->
-								<li>clapProfileId</li>
-								<li>clapArticleId</li>
+								<li>clapId <strong>(primary key)</strong></li> <!--this is the id that is generated for each indiv clap action.-->
+								<li>clapProfileId <strong>(foreign key)</strong></li>
+								<li>clapArticleId <strong>(foreign key)</strong></li>
 							</ul>
 						</li>
 					</ul>
@@ -90,14 +90,14 @@
 					<ul>
 						<li>This relationship occurs 0 or 1 times.</li>
 					</ul>
-					I need to come up with a different 1-to-1 example
+					Dylan says this is not relevant, can come up with a different 1-to-1 example
 				</li> -->
 				<li>Andrea posts articles to the Deep Dive Coders Medium channel (1-to-n)
 					<ul>
 						<li>This relationship can occur more than once.</li>
 					</ul>
 				</li>
-				<li>Numerous visitors to Medium.com read Andrea's article (m-to-n, also known as many-to-many)
+				<li>Numerous Medium users can clap various articles multiple times (m-to-n, also known as many-to-many)
 					<ul>
 						<li>This relationship occurs multiple times with multiple actors.</li>
 					</ul>
