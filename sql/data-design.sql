@@ -1,5 +1,4 @@
--- not sure if my database name "data_design" below is correct:
-ALTER DATABASE data_design CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER DATABASE escott15 CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE profile (
 	-- Our class Style Guide dictates that primary keys are listed first, foreign keys are listed second, and all other attributes are listed alphabetically. Refer to Style Guide here: https://bootcamp-coders.cnm.edu/study-guides/data-design-study-guide.php
