@@ -66,7 +66,7 @@
 								<li>articleId <strong>(primary key)</strong></li>
 								<li>articleProfileId <strong>(foreign key)</strong></li> <!--Foreign keys are a combo of two primary keys (profileId and articleId in this case).-->
 								<li>articleTitle <strong>(unique information)</strong></li>
-								<li>arcticleDateTime</li>
+								<li>articleDateTime</li>
 								<li>articleContent <strong>(unique information)</strong></li>
 							</ul>
 						</li>
@@ -103,6 +103,9 @@
 					</ul>
 				</li>
 			</ul>
+				<br>
+				<h2>Entity Relationship Diagram (ERD)</h2>
+				<img src = "images/erd-medium.jpeg" alt = "Medium.com ERD">
 			</div>
 		<br>
 	</body>
