@@ -40,7 +40,8 @@
 			<!--<p>Postcondition: Anything to include??</p>-->
 			<div>
 				<h2>Conceptual Model</h2>
-				<img src = "images/medium-entity-relationship-diagram.png" alt = "data design markup"><!--I might need to redo this image with the same verbiage I end up using as the labels of the boxes.-->
+<!--				<img src = "images/medium-entity-relationship-diagram.png" alt = "data design markup">
+<!--I might need to redo this image with the same verbiage I end up using as the labels of the boxes.-->
 			</div>
 			<h3>Entities &amp; Attributes</h3>
 			<ul>
@@ -86,18 +87,17 @@
 			<div>
 			<h2>Relationships</h2>
 				<ul>
-					<!--<li>A unique, logged-in user claps Andrea's post (1-to-1)
+					<li>Andrea has one Medium profile, and it is hers alone (1-to-1)
 					<ul>
 						<li>This relationship occurs 0 or 1 times.</li>
 					</ul>
-					Dylan says this is not relevant, can come up with a different 1-to-1 example
-				</li> -->
-				<li>Andrea posts articles to the Deep Dive Coders Medium channel (1-to-n)
+				</li>
+				<li>Andrea posts articles to the Deep Dive Coders Medium channel (1-to-n, or one-to-many)
 					<ul>
 						<li>This relationship can occur more than once.</li>
 					</ul>
 				</li>
-				<li>Numerous Medium users can clap various articles multiple times (m-to-n, also known as many-to-many)
+				<li>Numerous Medium users can clap various articles multiple times (m-to-n, or many-to-many)
 					<ul>
 						<li>This relationship occurs multiple times with multiple actors.</li>
 					</ul>
