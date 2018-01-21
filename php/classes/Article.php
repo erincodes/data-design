@@ -8,7 +8,7 @@ use Ramsey\Uuid\Uuid;
 /**
  * Cross Section of a "Medium" article
  *
- *This is a cross section of is stored when a user posts an article on Medium.com.
+ *This is a cross section of what is stored when a user posts an article on Medium.com.
  *
  * @author Erin Scott <erinleeannscott@gmail.com> updated for /~escott15/data-design
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
