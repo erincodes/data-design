@@ -8,7 +8,7 @@ use Ramsey\Uuid\Uuid;
 /**
  * Cross Section of a "Medium" article
  *
- *This is a cross section of what is stored when a user posts an article on Medium.com.
+ * This is a cross section of what is stored when a user posts an article on Medium.com.
  *
  * @author Erin Scott <erinleeannscott@gmail.com> updated for /~escott15/data-design
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
@@ -25,9 +25,9 @@ class Article {
 	private $articleId; // these private variables are the state variables 1/21
 	/**
 	 * this is the profile Id associated with this article: foreign key
-	 * @var Uuid $articleAuthorProfileId
+	 * @var Uuid $articleProfileId
 	 **/
-	private $articleAuthorProfileId;
+	private $articleProfileId;
 	/**
 	 * text content of the article
 	 * @var string $articleContent
@@ -37,12 +37,12 @@ class Article {
 	 * date and time the article was published in a PHP date time object
 	 * @var \DateTime $articleDate
 	 **/
-	private $articleDate;
+	private $articleDateTime;
 	/**
 	 * constructor for this article
 	 *
 	 * @param string|Uuid $newArticleId id of this article or null if a new article
-	 * @param string|Uuid $newArticleAuthorProfileId id of the Profile that sent this article
+	 * @param string|Uuid $newArticleProfileId id of the Profile that sent this article
 	 * @param string $newArticleContent string containing actual article data
 	 * @param \DateTime|string|null $newArticleDate date and time article was sent or null if set to current date and time
 	 * @throws \InvalidArgumentException if data types are not valid
@@ -51,12 +51,12 @@ class Article {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newArticleId, $newArticleAuthorProfileId, string $newArticleContent, $newArticleDate = null) {
+	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, $newArticleDateTime = null) {
 		try {
 			$this->setArticleId($newArticleId);
-			$this->setArticleAuthorProfileId($newArticleAuthorProfileId);
+			$this->setArticleProfileId($newArticleProfileId);
 			$this->setArticleContent($newArticleContent);
-			$this->setArticleDate($newArticleDate);
+			$this->setArticleDateTime($newArticleDateTime);
 		} //determine what exception type was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
@@ -93,25 +93,25 @@ class Article {
 	 *
 	 * @return Uuid value of article author's profile id
 	 **/
-	public function getArticleAuthorProfileId(): Uuid {
-		return ($this->articleAuthorProfileId);
+	public function getArticleProfileId(): Uuid {
+		return ($this->articleProfileId);
 	}
 	/**
 	 * mutator method for article author's profile id
 	 *
-	 * @param string | Uuid $newArticleAuthorProfileId new value of article author's profile id
+	 * @param string | Uuid $newArticleProfileId new value of article author's profile id
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError if $newArticleProfileId is not an integer
 	 **/
-	public function setArticleAuthorProfileId($newArticleAuthorProfileId): void {
+	public function setArticleProfileId($newArticleProfileId): void {
 		try {
-			$uuid = self::validateUuid($newArticleAuthorProfileId);
+			$uuid = self::validateUuid($newArticleProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		// convert and store the profile id
-		$this->articleAuthorProfileId = $uuid;
+		$this->articleProfileId = $uuid;
 	}
 	/**
 	 * accessor method for article content
@@ -148,29 +148,29 @@ class Article {
 	 *
 	 * @return \DateTime value of article date
 	 **/
-	public function getArticleDate(): \DateTime {
-		return ($this->articleDate);
+	public function getArticleDateTime(): \DateTime {
+		return ($this->articleDateTime);
 	}
 	/**
 	 * mutator method for article date
 	 *
-	 * @param \DateTime|string|null $newArticleDate article date as a DateTime object or string (or null to load the current time)
-	 * @throws \InvalidArgumentException if $newArticleDate is not a valid object or string
-	 * @throws \RangeException if $newArticleDate is a date that does not exist
+	 * @param \DateTime|string|null $newArticleDateTime article date as a DateTime object or string (or null to load the current time)
+	 * @throws \InvalidArgumentException if $newArticleDateTime is not a valid object or string
+	 * @throws \RangeException if $newArticleDateTime is a date that does not exist
 	 **/
-	public function setArticleDate($newArticleDate = null): void {
+	public function setArticleDateTime($newArticleDateTime = null): void {
 		// base case: if the date is null, use the current date and time
-		if($newArticleDate === null) {
-			$this->articleDate = new \DateTime();
+		if($newArticleDateTime === null) {
+			$this->articleDateTime = new \DateTime();
 			return;
 		}
 		// store the like date using the ValidateDate trait
 		try {
-			$newArticleDate = self::validateDateTime($newArticleDate);
+			$newArticleDateTime = self::validateDateTime($newArticleDateTime);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$this->articleDate = $newArticleDate;
+		$this->articleDateTime = $newArticleDateTime;
 	}
 }
