@@ -21,20 +21,10 @@ class Profile {
 	 **/
 	private $profileId;
 	/**
-	 * this is the Full Name associated with this account
-	 * @var string $profileFullName
-	 **/
-	private $profileFullName;
-	/**
 	 * token handed out to verify that account is not malicious
 	 * @var string $profileActivationToken
 	 **/
 	private $profileActivationToken;
-	/**
-	 * caption: this would most likely be stored in a different database...but I included it in my preliminary design here...
-	 * @var string $profileCaption
-	 **/
-	private $profileCaption;
 	/**
 	 * email associated with this profile; this is a unique index
 	 * @var string $profileEmail
@@ -46,10 +36,10 @@ class Profile {
 	 **/
 	private $profileHash;
 	/**
-	 * phone number stored for this profile without "-"
-	 * @var string $profilePhone
+	 * name stored for this profile
+	 * @var string $profileName
 	 **/
-	private $profilePhone;
+	private $profileName;
 	/**
 	 * salt stored for this profile
 	 * @var string $profileSalt
@@ -236,39 +226,39 @@ class Profile {
 		$this->profileHash = $newProfileHash;
 	}
 	/**
-	 * accessor method for phone
+	 * accessor method for name
 	 *
-	 * @return string value of phone or null
+	 * @return string value
 	 **/
-	public function getProfilePhone(): ?string {
-		return ($this->profilePhone);
+	public function getProfileName(): ?string {
+		return ($this->profileName);
 	}
 	/**
-	 * mutator method for phone
+	 * mutator method for name
 	 *
-	 * @param string $newProfilePhone new value of phone
-	 * @throws \InvalidArgumentException if $newPhone is not a string or insecure
-	 * @throws \RangeException if $newPhone is > 32 characters
-	 * @throws \TypeError if $newPhone is not a string
+	 * @param string $newProfileName new value of name
+	 * @throws \InvalidArgumentException if $newName is not a string or insecure
+	 * @throws \RangeException if $newName is > 32 characters
+	 * @throws \TypeError if $newName is not a string
 	 **/
-	public function setProfilePhone(?string $newProfilePhone): void {
-		//if $profilePhone is null return it right away
-		if($newProfilePhone === null) {
-			$this->profilePhone = null;
+	public function setProfileName(?string $newProfileName): void {
+		//if $profileName is null return it right away
+		if($newProfileName === null) {
+			$this->profileName = null;
 			return;
 		}
-		// verify the phone is secure
-		$newProfilePhone = trim($newProfilePhone);
-		$newProfilePhone = filter_var($newProfilePhone, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfilePhone) === true) {
-			throw(new \InvalidArgumentException("profile phone is empty or insecure"));
+		// verify the name is secure
+		$newProfileName = trim($newProfileName);
+		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newProfileName) === true) {
+			throw(new \InvalidArgumentException("profile name is empty or insecure"));
 		}
-		// verify the phone will fit in the database
-		if(strlen($newProfilePhone) > 32) {
-			throw(new \RangeException("profile phone is too large"));
+		// verify the name will fit in the database
+		if(strlen($newProfileName) > 32) {
+			throw(new \RangeException("profile name is too large"));
 		}
-		// store the phone
-		$this->profilePhone = $newProfilePhone;
+		// store the name
+		$this->profileName = $newProfileName;
 	}
 	/**
 	 *accessor method for profile salt
