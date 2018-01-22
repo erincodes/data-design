@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\DataDesign;
+namespace Edu\Cnm\Escott15\DataDesign;
 require_once("autoload.php");
 require_once(dirname(__DIR__) . "autoload.php");
 use Ramsey\Uuid\Uuid;
@@ -54,9 +54,9 @@ class Profile {
 		return ($this->profileId);
 	}
 	/**
-	 * mutator function for profileId
+	 * mutator method for profileId
 	 *
-	 * @param Uuid | string $newProfileId with the value of profileId
+	 * @param Uuid|string $newProfileId with the value of profileId
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError id profile id is not positive
 	 **/
@@ -105,7 +105,7 @@ class Profile {
 	 *
 	 * @return string value of the activation token
 	 **/
-	public function getProfileActivationToken() : ?string {
+	public function getProfileActivationToken() : string {
 		return ($this->profileActivationToken);
 	}
 	/**
@@ -177,10 +177,10 @@ class Profile {
 	 * @throws \RangeException if $newEmail is > 128 characters
 	 * @throws \TypeError if $newEmail is not a string
 	 **/
-	public function setProfileEmail(string $newProfileEmail): void {
+	public function setProfileEmail(string $newProfileEmail) : void {
 		// verify the email is secure
 		$newProfileEmail = trim($newProfileEmail);
-		$newProfileEmail = filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL);
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_EMAIL);
 		if(empty($newProfileEmail) === true) {
 			throw(new \InvalidArgumentException("profile email is empty or insecure"));
 		}
