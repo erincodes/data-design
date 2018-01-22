@@ -1,7 +1,8 @@
 <?php
 namespace Edu\Cnm\DataDesign;
 require_once("autoload.php");
-require_once(dirname(__DIR__) . "autoload.php");
+require_once(dirname(__DIR__, ) . "/vendor/autoload.php");
+
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -25,7 +26,7 @@ class Clap {
 	private $clapArticleId;
 	/**
 	 * id of the Profile that sent this clap; this is a foreign key
-	 * @var Uuid $clapProfilId
+	 * @var Uuid $clapProfileId
 	 **/
 	private $clapProfileId;
 	/**
@@ -56,7 +57,7 @@ class Clap {
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		// convert and store the profile id
-		$this->clapArticleId= $uuid;
+		$this->clapArticleId = $uuid;
 	}
 	/**
 	 * accessor method for clap profile id
@@ -69,7 +70,7 @@ class Clap {
 	/**
 	 * mutator method for clap profile id
 	 *
-	 * @param string | Uuid $newClapProfileId new value of clap profile id
+	 * @param string|Uuid $newClapProfileId new value of clap profile id
 	 * @throws \RangeException if $newClapProfileId is not positive
 	 * @throws \TypeError if $newClapProfileId is not an integer
 	 **/
