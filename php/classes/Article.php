@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\DataDesign;
+namespace Edu\Cnm\Escott15\DataDesign;
 
 require_once("autoload.php");
 require_once(dirname(__DIR__) . "autoload.php");
