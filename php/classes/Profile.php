@@ -46,6 +46,34 @@ class Profile implements \JsonSerializable {
 	 **/
 	private $profileSalt;
 	/**
+	 * constructor for this Profile
+	 *
+	 * @param string|Uuid $newProfileId id of this Profile or null if a new Profile
+	 * @param int $newProfileActivationToken integer verifying the profile user
+	 * @param string $newProfileEmail string of user's email address
+	 * @param string $newProfileName string of the user's profile name
+	 *
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newProfileId, $newProfileActivationToken, string $newProfileEmail, $newProfileName) {
+		try {
+			$this->setProfileId($newProfileId);
+			$this->setProfileActivationToken($newProfileActivationToken);
+			$this->setProfileEmail($newProfileEmail);
+			$this->setProfileName($newProfileName);
+		}
+			//determine what exception type was thrown. List in priority order.
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			//rethrow the exception. Constructors are not the place to take action on exceptions, we want to "pass the buck."
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+	/**
 	 * accessor method for getting profileId
 	 *
 	 * @return Uuid value for profileId (or null if new profile)
