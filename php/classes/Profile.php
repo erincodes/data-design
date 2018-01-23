@@ -88,7 +88,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError id profile id is not positive
 	 **/
-	public function setProfileId( newProfileId): void {
+	public function setProfileId( newProfileId) : void {
 		try {
 			$uuid = self::validateUuid($newProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -144,7 +144,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if the token is not exactly 32 characters
 	 * @throws \TypeError if the activation token is not a string
 	 **/
-	public function setProfileActivationToken(?string $newProfileActivationToken): void {
+	public function setProfileActivationToken(?string $newProfileActivationToken) : void {
 		if($newProfileActivationToken === null) {
 			$this->profileActivationToken = null;
 			return;
@@ -235,7 +235,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if the hash is not 128 characters
 	 * @throws \TypeError if profile hash is not a string
 	 **/
-	public function setProfileHash(string $newProfileHash): void {
+	public function setProfileHash(string $newProfileHash) : void {
 		//enforce that the hash is properly formatted
 		$newProfileHash = trim($newProfileHash);
 		$newProfileHash = strtolower($newProfileHash);
@@ -269,7 +269,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newName is > 32 characters
 	 * @throws \TypeError if $newName is not a string
 	 **/
-	public function setProfileName(?string $newProfileName): void {
+	public function setProfileName(?string $newProfileName) : void {
 		//if $profileName is null return it right away
 		if($newProfileName === null) {
 			$this->profileName = null;
@@ -304,7 +304,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if the salt is not 64 characters
 	 * @throws \TypeError if the profile salt is not a string
 	 */
-	public function setProfileSalt(string $newProfileSalt): void {
+	public function setProfileSalt(string $newProfileSalt) : void {
 		//enforce that the salt is properly formatted
 		$newProfileSalt = trim($newProfileSalt);
 		$newProfileSalt = strtolower($newProfileSalt);
