@@ -13,10 +13,10 @@ use Ramsey\Uuid\Uuid;
  * @version 4.0.0
  * @package Edu\Cnm\DataDesign
  **/
-class Profile {
+class Profile implements \JsonSerializable {
 	use ValidateUuid;
 	/**
-	 * id for this profile: primary key
+	 * id for this profile: this is the primary key
 	 * @var Uuid $profileId
 	 **/
 	private $profileId;
@@ -226,7 +226,7 @@ class Profile {
 		$this->profileHash = $newProfileHash;
 	}
 	/**
-	 * accessor method for name
+	 * accessor method for profile name
 	 *
 	 * @return string value
 	 **/
@@ -234,7 +234,7 @@ class Profile {
 		return ($this->profileName);
 	}
 	/**
-	 * mutator method for name
+	 * mutator method for profile name
 	 *
 	 * @param string $newProfileName new value of name
 	 * @throws \InvalidArgumentException if $newName is not a string or insecure
@@ -290,5 +290,22 @@ class Profile {
 		}
 		//store the hash
 		$this->profileSalt = $newProfileSalt;
+	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() : array {
+		// organize the state variables into an array:
+		$fields = get_object_vars($this);
+
+		$fields["profileId"] = $this->profileId->toString();
+		$fields["profileActivationToken"] = $this->profileActivationToken->toString();
+
+		//format the date so that the frontend can consume it
+		// I don't currently have a date attribute relating to the profile entity in my ERD, so I'm commenting the following code out for now. 1/23/18
+		//$fields["tweetDate"] = round(floatval($this->tweetDate->format("U.u")) * 1000);
+		return($fields);
 	}
 }
