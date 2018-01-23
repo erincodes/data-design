@@ -15,7 +15,7 @@ use Ramsey\Uuid\Uuid;
  * @version 4.0.0
  * @package Edu\Cnm\DataDesign
  **/
-class Article {
+class Article implements \JsonSerializable {
 	use ValidateDate;
 	use ValidateUuid;
 	/**
@@ -172,5 +172,23 @@ class Article {
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		$this->articleDateTime = $newArticleDateTime;
+	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	// organize the state variables into an array:
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["articleId"] = $this->articleId->toString();
+		$fields["articleProfileId"] = $this->articleProfileId->toString();
+		$fields["articleContent"] = $this->articleContent->toString();
+		$fields["articleTitle"] = $this->articleTitle->toString();
+
+		//format the date so that the frontend can consume it
+		$fields["articleDateTime"] = round(floatval($this->articleDateTime->format("U.u")) * 1000);
+		return($fields);
 	}
 }

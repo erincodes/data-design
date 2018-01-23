@@ -324,9 +324,9 @@ class Profile implements \JsonSerializable {
 	 *
 	 * @return array resulting state variables to serialize
 	 **/
+	// organize the state variables into an array:
 	public function jsonSerialize() : array {
-		// organize the state variables into an array:
-		$fields = get_object_vars($this);
+				$fields = get_object_vars($this);
 
 		$fields["profileId"] = $this->profileId->toString();
 		$fields["profileActivationToken"] = $this->profileActivationToken->toString();
