@@ -81,7 +81,7 @@ class Article implements \JsonSerializable {
 	 * @throws \RangeException if $newArticleId is not positive
 	 * @throws \TypeError if $newArticleId is not a uuid or string
 	 **/
-	public function setArticleId($newArticleId): void {
+	public function setArticleId($newArticleId) : void {
 		try {
 			$uuid = self::validateUuid($newArticleId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -106,7 +106,7 @@ class Article implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError if $newArticleProfileId is not an integer
 	 **/
-	public function setArticleProfileId($newArticleProfileId): void {
+	public function setArticleProfileId($newArticleProfileId) : void {
 		try {
 			$uuid = self::validateUuid($newArticleProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -132,7 +132,7 @@ class Article implements \JsonSerializable {
 	 * @throws \RangeException if $newArticleContent is > 140 characters (unrealistic, but that is how I build the database)
 	 * @throws \TypeError if $newArticleContent is not a string
 	 **/
-	public function setArticleContent(string $newArticleContent): void {
+	public function setArticleContent(string $newArticleContent) : void {
 		// verify the article content is secure
 		$newArticleContent = trim($newArticleContent);
 		$newArticleContent = filter_var($newArticleContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -161,7 +161,7 @@ class Article implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newArticleDateTime is not a valid object or string
 	 * @throws \RangeException if $newArticleDateTime is a date that does not exist
 	 **/
-	public function setArticleDateTime($newArticleDateTime = null): void {
+	public function setArticleDateTime($newArticleDateTime = null) : void {
 		// base case: if the date is null, use the current date and time
 		if($newArticleDateTime === null) {
 			$this->articleDateTime = new \DateTime();
