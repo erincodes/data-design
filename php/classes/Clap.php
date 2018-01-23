@@ -43,6 +43,56 @@ class Clap implements \JsonSerializable {
 	// **/
 		// private $clapDate;
 	/**
+	 * constructor for this clap
+	 *
+	 * @param string|Uuid $newClapId id of this clap or null if a new clap
+	 * @param string|Uuid $newClapArticleId id of the article that was clapped
+	 * @param string $newClapProfileId id of the profile that clapped the article
+	 *
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation Documentation on Constructors and Destructors https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct(uuid $newClapId, uuid $newClapArticleId, uuid $newClapProfileId) {
+		try {
+			$this->setClapId($newClapId);
+			$this->setClapArticleId($newClapArticleId);
+			$this->setClapProfileId($newClapProfileId);
+		} //determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+	/**
+	 * accessor method for clap id
+	 *
+	 * @return Uuid value of clap id
+	 **/
+	public function getClapId() : Uuid{
+		return($this->clapId);
+	}
+	/**
+	 * mutator method for clap id
+	 *
+	 * @param int|Uuid $newClapId new value of clapId
+	 * @throws \RangeException if $newClapId is not positive
+	 * @throws \TypeError if $newClapId is not an integer
+	 **/
+	public function setClapId($newClapId) : void {
+		try {
+			$uuid = self::validateUuid($newClapId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		// convert and store the clap id
+		$this->clapId = $uuid;
+	}
+
+	/**
 	 * accessor method for clap article id
 	 *
 	 * @return Uuid value of clap article id
