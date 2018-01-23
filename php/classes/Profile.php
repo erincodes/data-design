@@ -51,7 +51,9 @@ class Profile implements \JsonSerializable {
 	 * @param string|Uuid $newProfileId id of this Profile or null if a new Profile
 	 * @param int $newProfileActivationToken integer verifying the profile user
 	 * @param string $newProfileEmail string of user's email address
+	 * @param $newProfileHash
 	 * @param string $newProfileName string of the user's profile name
+	 * @param $newProfileSalt
 	 *
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -59,12 +61,14 @@ class Profile implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newProfileId, $newProfileActivationToken, string $newProfileEmail, $newProfileName) {
+	public function __construct($newProfileId, $newProfileActivationToken, string $newProfileEmail, $newProfileHash, $newProfileName, $newProfileSalt) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileActivationToken($newProfileActivationToken);
 			$this->setProfileEmail($newProfileEmail);
+			$this->setProfileHash($newProfileHash);
 			$this->setProfileName($newProfileName);
+			$this->setProfileSalt($newProfileSalt);
 		}
 			//determine what exception type was thrown. List in priority order.
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -329,11 +333,16 @@ class Profile implements \JsonSerializable {
 				$fields = get_object_vars($this);
 
 		$fields["profileId"] = $this->profileId->toString();
-		$fields["profileActivationToken"] = $this->profileActivationToken->toString();
+		// I had initially included profileActivationToken, but learned that you don't want anything that's a security risk to be included in JSON (like activation token, hash, salt, email). Commenting out to keep for reference.
 
 		//format the date so that the frontend can consume it
 		// I don't currently have a date attribute relating to the profile entity in my ERD, so I'm commenting the following code out for now. 1/23/18
 		//$fields["tweetDate"] = round(floatval($this->tweetDate->format("U.u")) * 1000);
+
+	// unset the aspects we don't want to be public
+		unset($fields["profileHash"]);
+		unset($fields["profileSalt"]);
+
 		return($fields);
 	}
 }
