@@ -47,7 +47,7 @@ class Clap implements \JsonSerializable {
 	 *
 	 * @param string|Uuid $newClapId id of this clap or null if a new clap
 	 * @param string|Uuid $newClapArticleId id of the article that was clapped
-	 * @param string $newClapProfileId id of the profile that clapped the article
+	 * @param string|Uuid $newClapProfileId id of the profile that clapped the article
 	 *
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -79,7 +79,7 @@ class Clap implements \JsonSerializable {
 	 *
 	 * @param int|Uuid $newClapId new value of clapId
 	 * @throws \RangeException if $newClapId is not positive
-	 * @throws \TypeError if $newClapId is not an integer
+	 * @throws \TypeError if data types violate type hints
 	 **/
 	public function setClapId($newClapId) : void {
 		try {
@@ -105,7 +105,7 @@ class Clap implements \JsonSerializable {
 	 *
 	 * @param string | Uuid $newClapArticleId new value of clap article id
 	 * @throws \RangeException if $newClapArticleId is not positive
-	 * @throws \TypeError if $newClapArticleId is not an integer
+	 * @throws \TypeError if data types violate type hints
 	 **/
 	public function setClapArticleId($newClapArticleId) : void {
 		try {
@@ -130,7 +130,7 @@ class Clap implements \JsonSerializable {
 	 *
 	 * @param string|Uuid $newClapProfileId new value of clap profile id
 	 * @throws \RangeException if $newClapProfileId is not positive
-	 * @throws \TypeError if $newClapProfileId is not an integer
+	 * @throws \TypeError if data types violate type hints
 	 **/
 	public function setClapProfileId($newClapProfileId) : void {
 		try {
