@@ -44,19 +44,22 @@ class Article implements \JsonSerializable {
 	 * @param string|Uuid $newArticleId id of this article or null if a new article
 	 * @param string|Uuid $newArticleProfileId id of the Profile that sent this article
 	 * @param string $newArticleContent string containing actual article data
-	 * @param \DateTime|string|null $newArticleDate date and time article was sent or null if set to current date and time
+	 * @param \DateTime string|null $newArticleDateTime, the date and time article was sent or null if set to current date and time
+	 * @param string $newArticleTitle string containing title of the article
+	 *
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
-	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 * @Documentation Documentation on Constructors and Destructors https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, $newArticleDateTime = null) {
+	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, $newArticleDateTime = null, string $newArticleTitle) {
 		try {
 			$this->setArticleId($newArticleId);
 			$this->setArticleProfileId($newArticleProfileId);
 			$this->setArticleContent($newArticleContent);
 			$this->setArticleDateTime($newArticleDateTime);
+			$this->setArticleTitle($newArticleTitle);
 		} //determine what exception type was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
