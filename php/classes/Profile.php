@@ -71,34 +71,34 @@ class Profile {
 		$this->profileId = $uuid;
 	}
 	/**
-	 * accessor method for full name
+	 * accessor method for name
 	 *
-	 * @return string value of full name
+	 * @return string value of name
 	 **/
-	public function getProfileFullName(): string {
-		return ($this->profileFullName);
+	public function getName(): string {
+		return ($this->profileName);
 	}
 	/**
-	 * mutator method for full name
+	 * mutator method for name
 	 *
-	 * @param string $newProfileFullName new value of full name
-	 * @throws \InvalidArgumentException if $newProfileFullName is not a string or insecure
-	 * @throws \RangeException if $newProfileFullName is > 32 characters (may not work for all names, but I did set this field to 32 in my database so I am sticking with it)
-	 * @throws \TypeError if $newProfileFullName is not a string
+	 * @param string $newProfileName new value of name
+	 * @throws \InvalidArgumentException if $newProfileName is not a string or insecure
+	 * @throws \RangeException if $newProfileName is > 32 characters (may not work for all names, but I did set this field to 32 in my database so I am sticking with it)
+	 * @throws \TypeError if $newProfileName is not a string
 	 **/
-	public function setProfileFullName(string $newProfileFullName) : void {
-		// verify the full name is secure
-		$newProfileFullName = trim($newProfileFullName);
-		$newProfileFullName = filter_var($newProfileFullName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileFullName) === true) {
-			throw(new \InvalidArgumentException("profile full name is empty or insecure"));
+	public function setProfileName(string $newProfileName) : void {
+		// verify the name is secure
+		$newProfileName = trim($newProfileName);
+		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newProfileName) === true) {
+			throw(new \InvalidArgumentException("profile name is empty or insecure"));
 		}
-		// verify the full name will fit in the database
-		if(strlen($newProfileFullName) > 32) {
-			throw(new \RangeException("profile full name is too large"));
+		// verify the name will fit in the database
+		if(strlen($newProfileName) > 32) {
+			throw(new \RangeException("profile name is too large"));
 		}
-		// store the full name
-		$this->profileFullName = $newProfileFullName;
+		// store the name
+		$this->profileName = $newProfileName;
 	}
 	/**
 	 * accessor method for account activation token
