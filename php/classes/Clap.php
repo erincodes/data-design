@@ -21,6 +21,11 @@ class Clap implements \JsonSerializable {
 	use ValidateDate;
 	use ValidateUuid;
 	/**
+	 * id of the article that this clap is for; this is a primary key
+	 * @var Uuid $clapId
+	 **/
+	private $clapId;
+	/**
 	 * id of the article that this clap is for; this is a foreign key
 	 * @var Uuid $clapArticleId
 	 **/
@@ -30,11 +35,13 @@ class Clap implements \JsonSerializable {
 	 * @var Uuid $clapProfileId
 	 **/
 	private $clapProfileId;
-	/**
-	 * date and time this clap was sent, in a PHP DateTime object
-	 * @var \DateTime $clapDate
-	 **/
-	private $clapDate;
+
+	 // I don't currently have clapDate on my ERD, may need to add it. Commenting out this portion of doc block and state variable for now. 1/23/18
+	// /**
+	 // * date and time this clap was sent, in a PHP DateTime object
+	// * @var \DateTime $clapDate
+	// **/
+		// private $clapDate;
 	/**
 	 * accessor method for clap article id
 	 *
@@ -85,36 +92,40 @@ class Clap implements \JsonSerializable {
 		// convert and store the profile id
 		$this->clapProfileId = $uuid;
 	}
-	/**
-	 * accessor method for clap date
-	 *
-	 * @return \DateTime value of clap date
-	 **/
-	public function getClapDate() : \DateTime {
-		return($this->clapDate);
-	}
-	/**
-	 * mutator method for clap date
-	 *
-	 * @param \DateTime|string|null $newClapDate clap date as a DateTime object or string (or null to load the current time)
-	 * @throws \InvalidArgumentException if $newClapDate is not a valid object or string
-	 * @throws \RangeException if $newClapDate is a date that does not exist
-	 **/
-	public function setClapDate($newClapDate = null) : void {
-		// base case: if the date is null, use the current date and time
-		if($newClapDate === null) {
-			$this->clapDate = new \DateTime();
-			return;
-		}
-		// store the like date using the ValidateDate trait
-		try {
-			$newClapDate = self::validateDateTime($newClapDate);
-		} catch(\InvalidArgumentException | \RangeException $exception) {
-			$exceptionType = get_class($exception);
-			throw(new $exceptionType($exception->getMessage(), 0, $exception));
-		}
-		$this->clapDate = $newClapDate;
-	}
+
+	// I don't currently have clapDate on my ERD, may need to add it. Commenting out accessor method for now. 1/23/18
+	// /**
+	 // * accessor method for clap date
+	 // *
+	// * @return \DateTime value of clap date
+	// **/
+	// public function getClapDate() : \DateTime {
+	// return($this->clapDate);
+	// }
+
+// I don't currently have clapDate on my ERD, may need to add it. Commenting out mutator method for now. 1/23/18
+	// /**
+	 // * mutator method for clap date
+	 // *
+	 // * @param \DateTime|string|null $newClapDate clap date as a DateTime object or string (or null to load the current time)
+	 // * @throws \InvalidArgumentException if $newClapDate is not a valid object or string
+	 // * @throws \RangeException if $newClapDate is a date that does not exist
+	 // **/
+	// public function setClapDate($newClapDate = null) : void {
+		// // base case: if the date is null, use the current date and time
+		// if($newClapDate === null) {
+			// $this->clapDate = new \DateTime();
+			// return;
+		// }
+		// // store the like date using the ValidateDate trait
+		// try {
+			// $newClapDate = self::validateDateTime($newClapDate);
+		// } catch(\InvalidArgumentException | \RangeException $exception) {
+			// $exceptionType = get_class($exception);
+			// throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		// }
+		// $this->clapDate = $newClapDate;
+	// }
 	/**
 	 * formats the state variables for JSON serialization
 	 *
