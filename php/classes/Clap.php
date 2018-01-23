@@ -115,4 +115,22 @@ class Clap implements \JsonSerializable {
 		}
 		$this->clapDate = $newClapDate;
 	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	// organize the state variables into an array:
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["clapId"] = $this->clapId->toString();
+		$fields["clapArticleId"] = $this->clapArticleId->toString();
+		$fields["clapProfileId"] = $this->clapProfileId->toString();
+
+		//format the date so that the frontend can consume it
+		// I don't currently have a date attribute relating to the profile entity in my ERD, so I'm commenting the following code out for now. 1/23/18
+		// $fields["articleDateTime"] = round(floatval($this->articleDateTime->format("U.u")) * 1000);
+		return($fields);
+	}
 }
