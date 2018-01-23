@@ -16,7 +16,8 @@ use Ramsey\Uuid\Uuid;
  * @package Edu\Cnm\DataDesign
  **/
 
-class Clap {
+// The JsonSerializable is when you agree to implement the contract. JsonSerialize saves you the time of writing out the JSON code.
+class Clap implements \JsonSerializable {
 	use ValidateDate;
 	use ValidateUuid;
 	/**
