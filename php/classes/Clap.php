@@ -55,7 +55,7 @@ class Clap implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation Documentation on Constructors and Destructors https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct(uuid $newClapId, uuid $newClapArticleId, uuid $newClapProfileId) {
+	public function __construct($newClapId, $newClapArticleId, $newClapProfileId) {
 		try {
 			$this->setClapId($newClapId);
 			$this->setClapArticleId($newClapArticleId);
