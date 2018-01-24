@@ -39,6 +39,11 @@ class Article implements \JsonSerializable {
 	 **/
 	private $articleDateTime;
 	/**
+	 * the title of the article
+	 * @var string $articleTitle
+	 */
+	private $articleTitle;
+	/**
 	 * constructor for this article
 	 *
 	 * @param string|Uuid $newArticleId id of this article or null if a new article
