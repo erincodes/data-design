@@ -1,4 +1,4 @@
-	-- below is my notes from trying out various MySQL commands in the @localhost
+	-- below are my notes from trying out various MySQL commands in the @localhost
 
 	-- worked:
 	INSERT INTO profile(profileId, profileActivationToken, profileEmail, profileHash, profileName, profileSalt)

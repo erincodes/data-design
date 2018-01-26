@@ -437,6 +437,28 @@ class Profile implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
+	public static function getAllProfiles(\PDO $pdo) : \SPLFixedArray {
+		//create a query template
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileName FROM profile";
+		$statement = $pdo->prepare($query);
+		$statement = ->execute();
+		//builds an array of profiles
+		$profiles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$profile = new Profile ($row ["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileName"]);
+				$profiles[$profiles->key()] = $profile;
+				$profiles->next();
+			}
+			catch(\Exception $exception){
+				//if the row couldn't be converted, re-throw it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($profiles);
+	}
+
 	/**
 	 * formats the state variables for JSON serialization
 	 *
