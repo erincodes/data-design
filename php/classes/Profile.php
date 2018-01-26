@@ -1,7 +1,9 @@
 <?php
 namespace Edu\Cnm\Escott15\DataDesign;
 require_once("autoload.php");
-require_once(dirname(__DIR__) . "autoload.php");
+require_once(dirname(__DIR__) . "/vendor/autoload.php");
+
+use Edu\Cnm\DataDesign\ValidateUuid;
 use Ramsey\Uuid\Uuid;
 /**
  * Cross Section of a "Medium" Profile
@@ -163,37 +165,7 @@ class Profile implements \JsonSerializable {
 		}
 		$this->profileActivationToken = $newProfileActivationToken;
 	}
-	/**
-	 * accessor method for profile caption
-	 *
-	 * @return string value of profile caption
-	 **/
-	public function getProfileCaption() :string {
-		return($this->profileCaption);
-	}
-	/**
-	 * mutator method for profile caption
-	 *
-	 * @param string $newProfileCaption new value of profile caption
-	 * @throws \InvalidArgumentException if $newProfileCaption is not a string or insecure
-	 * @throws \RangeException if $newProfileCaption is > 140 characters
-	 * @throws \TypeError if $newProfileCaption is not a string
-	 **/
-	public function setProfileCaption(string $newProfileCaption) : void {
-		// verify the profile caption is secure
-		$newProfileCaption = trim($newProfileCaption);
-		$newProfileCaption = filter_var($newProfileCaption, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileCaption) === true) {
-			throw(new \InvalidArgumentException("tweet content is empty or insecure"));
-		}
-		// verify the tweet content will fit in the database
-		if(strlen($newProfileCaption) > 140) {
-			throw(new \RangeException("tweet content too large"));
-		}
-		// store the tweet content
-		$this->profileCaption = $newProfileCaption;
-	}
-	/**
+		/**
 	 * accessor method for email
 	 *
 	 * @return string value of email
