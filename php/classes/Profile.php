@@ -361,6 +361,21 @@ class Profile implements \JsonSerializable {
 		$parameters = ["tweetId" => $this->tweetId->getBytes()];
 		$statement->execute($parameters);
 	}
+	/**
+	 * updates this profile in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 *
+	 * @throws \PDOException when mySQL related errors occur
+	 * @thows \TypeError if $pdo is not a PDO connection object
+	 **/
+
+	//create query template
+	$query = "UPDATE profile SET profileActivationToken = :profileActivationToken, profileEmail = :profileEmail, profileName = :profileName WHERE profileId = :profileId";
+	$statement = $pdo->prepare($query);
+
+	$parameters = ["profileId" => $this->tweetId->getBytes(), "profileActivationToken" => $this->tweetProfileId->getBytes(), "profileEmail" => $this->profileEmail, "profileName" => $this->profileName];
+	$statement->execute($parameters);
 
 	/**
 	 * formats the state variables for JSON serialization
