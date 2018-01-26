@@ -343,6 +343,26 @@ class Profile implements \JsonSerializable {
 	}
 
 	/**
+	 * deletes this profileId row from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 *
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+
+	public function delete(\PDO $pdo) : void {
+
+		// creates a query template
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holder in the template.
+		$parameters = ["tweetId" => $this->tweetId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
