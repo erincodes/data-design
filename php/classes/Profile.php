@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\Escott15\DataDesign;
 require_once("autoload.php");
-require_once(dirname(__DIR__) . "/vendor/autoload.php");
+require_once(dirname(__DIR__) . "../vendor/autoload.php");
 
 use Edu\Cnm\DataDesign\ValidateUuid;
 use Ramsey\Uuid\Uuid;
@@ -94,7 +94,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError id profile id is not positive
 	 **/
-	public function setProfileId( newProfileId) : void {
+	public function setProfileId($newProfileId) : void {
 		try {
 			$uuid = self::validateUuid($newProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -103,36 +103,6 @@ class Profile implements \JsonSerializable {
 		}
 		// convert and store the profile id
 		$this->profileId = $uuid;
-	}
-	/**
-	 * accessor method for name
-	 *
-	 * @return string value of name
-	 **/
-	public function getName(): string {
-		return ($this->profileName);
-	}
-	/**
-	 * mutator method for name
-	 *
-	 * @param string $newProfileName new value of name
-	 * @throws \InvalidArgumentException if $newProfileName is not a string or insecure
-	 * @throws \RangeException if $newProfileName is > 32 characters (may not work for all names, but I did set this field to 32 in my database so I am sticking with it)
-	 * @throws \TypeError if $newProfileName is not a string
-	 **/
-	public function setProfileName(string $newProfileName) : void {
-		// verify the name is secure
-		$newProfileName = trim($newProfileName);
-		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileName) === true) {
-			throw(new \InvalidArgumentException("profile name is empty or insecure"));
-		}
-		// verify the name will fit in the database
-		if(strlen($newProfileName) > 32) {
-			throw(new \RangeException("profile name is too large"));
-		}
-		// store the name
-		$this->profileName = $newProfileName;
 	}
 	/**
 	 * accessor method for account activation token
@@ -311,7 +281,7 @@ class Profile implements \JsonSerializable {
 
 		//bind the member variables to the place holders in the template
 		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken->getBytes(), "profileEmail" => $this->profileEmail, "profileName" => $this->profileName];
-		statement->execute($parameters);
+		$statement->execute($parameters);
 	}
 
 	/**
@@ -330,7 +300,7 @@ class Profile implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holder in the template.
-		$parameters = ["tweetId" => $this->tweetId->getBytes()];
+		$parameters = ["profileId" => $this->profileId->getBytes()];
 		$statement->execute($parameters);
 	}
 	/**
@@ -342,12 +312,14 @@ class Profile implements \JsonSerializable {
 	 * @thows \TypeError if $pdo is not a PDO connection object
 	 **/
 
-	//create query template
-	$query = "UPDATE profile SET profileActivationToken = :profileActivationToken, profileEmail = :profileEmail, profileName = :profileName WHERE profileId = :profileId";
-	$statement = $pdo->prepare($query);
+	public function update(\PDO $pdo): void {
+		//create query template
+		$query = "UPDATE profile SET profileActivationToken = :profileActivationToken, profileEmail = :profileEmail, profileName = :profileName WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
 
-	$parameters = ["profileId" => $this->tweetId->getBytes(), "profileActivationToken" => $this->tweetProfileId->getBytes(), "profileEmail" => $this->profileEmail, "profileName" => $this->profileName];
-	$statement->execute($parameters);
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileProfileId->getBytes(), "profileEmail" => $this->profileEmail, "profileName" => $this->profileName];
+		$statement->execute($parameters);
+	}
 
 	/**
 	 * gets the profile by profileId
@@ -413,7 +385,7 @@ class Profile implements \JsonSerializable {
 		//create a query template
 		$query = "SELECT profileId, profileActivationToken, profileEmail, profileName FROM profile";
 		$statement = $pdo->prepare($query);
-		$statement = ->execute();
+		$statement->execute();
 		//builds an array of profiles
 		$profiles = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -444,8 +416,8 @@ class Profile implements \JsonSerializable {
 		// I had initially included profileActivationToken, but learned that you don't want anything that's a security risk to be included in JSON (like activation token, hash, salt, email). Commenting out to keep for reference.
 
 		//format the date so that the frontend can consume it
-		// I don't currently have a date attribute relating to the profile entity in my ERD, so I'm commenting the following code out for now. 1/23/18
-		//$fields["tweetDate"] = round(floatval($this->tweetDate->format("U.u")) * 1000);
+		// I don't currently have a date attribute relating to the profile entity in my ERD, but I want to keep the following code for reference. 1/23/18
+		//$fields["profileDate"] = round(floatval($this->profileDate->format("U.u")) * 1000);
 
 	// unset the aspects we don't want to be public
 		unset($fields["profileHash"]);
